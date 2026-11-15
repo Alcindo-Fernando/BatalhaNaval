@@ -1,6 +1,7 @@
 ﻿int tamanho = 10;
 
 int[,] mapa = new int[tamanho, tamanho];
+int[,] meuMapa = new int[tamanho, tamanho];
 
 void popularMatriz(int[,] matriz)
 {
@@ -19,7 +20,6 @@ void popularMatriz(int[,] matriz)
 
 }
  
-
  void GerarNavios(int[,] matriz)
 {
 
@@ -33,15 +33,15 @@ void popularMatriz(int[,] matriz)
         int posicao = Random.Shared.Next(0, 2);
         if (posicao == vertical)
         {
-            int linhaX = Random.Shared.Next(0, 10);
-            int colunaY = Random.Shared.Next(0, 10);
+            int linhaX = Random.Shared.Next(0, tamanho);
+            int colunaY = Random.Shared.Next(0, tamanho);
 
 
 
 
-            if (colunaY + 1 > 9)
+            if (colunaY + 1 > 9 && colunaY != 9)
             {
-                colunaY -= 4;
+                colunaY -= tamanhoBarco;
             }
             for (int coluna = 0; coluna < tamanhoBarco; coluna++)
             {
@@ -61,12 +61,12 @@ void popularMatriz(int[,] matriz)
         {
 
 
-            int linhaX = Random.Shared.Next(0, 10);
-            int colunaY = Random.Shared.Next(0, 10);
+            int linhaX = Random.Shared.Next(0, tamanho);
+            int colunaY = Random.Shared.Next(0, tamanho);
 
-            if (linhaX + 1 > 9)
+            if (linhaX + 1 > 9 && linhaX != 9)
             {
-                linhaX -= 4;
+                linhaX -= tamanhoBarco;
             }
             for (int coluna = 0; coluna < tamanhoBarco; coluna++)
             {
@@ -75,7 +75,7 @@ void popularMatriz(int[,] matriz)
 
                 colunaY += 1;
 
-                if (colunaY + 1 > 9)
+                if (colunaY > 9)
                 {
                     colunaY -= tamanhoBarco;
                 }
@@ -85,27 +85,6 @@ void popularMatriz(int[,] matriz)
             tamanhoBarco--; 
     }
 } 
-
-
-popularMatriz(mapa);
-
-GerarNavios(mapa);
-
-Console.WriteLine();
-
-escolherAtaque(mapa);
-
-
-
-//int soma = 0;
-
-//for(int i = 0; i < tamanho; i++)
-//{
-//    for(int j = 0; j < tamanho; j++)
-//    {
-//        soma += mapa[i, j]; 
-//    }
-//}
 
 void imprimirMapa(int[,] matriz)
 { 
@@ -129,18 +108,24 @@ void imprimirMapa(int[,] matriz)
     }
 }
 
-void mostrarMapa()
+void imprimirMeuMapa(int[,] matriz)
 {
-
-    int contador = 1;
-    for (int i = 0; i < tamanho; i++)
+    for(int linha = 0; linha < tamanho; linha++)
     {
-        for (int j = 0; j < tamanho; j++)
+        for(int coluna = 0; coluna < tamanho; coluna++)
         {
-            Console.Write($"[{i}, {j}]\t");
-            contador++;
-           
+
+            if (matriz[linha, coluna] > 0)
+            {
+                Console.Write("[ - ]");
+            }
+            else
+            {
+                Console.Write($"[{linha},{coluna}]");
+            }
+
         }
+
         Console.WriteLine();
     }
 }
@@ -148,7 +133,7 @@ void mostrarMapa()
 void escolherAtaque(int[,] matriz)
 {
     int soma = 0;
-    while (soma < 16)
+    while (soma < 15)
     {
         int linhaAtaque;
         int colunaAtaque;
@@ -175,5 +160,89 @@ void escolherAtaque(int[,] matriz)
 
 }
 
+
+void escolherNavios(int[,] matriz)
+{
+    int tamanhoBarco = 5;
+
+    int vertical = 0;
+
+
+    for (int quantidadeBarcos = 0; quantidadeBarcos < 5; quantidadeBarcos++) //vai percorrer 5 vezes, pois são 5 barcos
+    {
+        imprimirMeuMapa(matriz);
+        Console.WriteLine();
+        Console.WriteLine("Informe 0 para barco na vertical e 1 para barco na horizontal");
+        int posicao = int.Parse(Console.ReadLine());
+        if (posicao == vertical)
+        {
+            Console.WriteLine("Informe a linha onde ira iniciar o barco");
+            int linhaX = int.Parse(Console.ReadLine());
+            Console.WriteLine("Informe a coluna onde ira iniciar o barco");
+            int colunaY = int.Parse(Console.ReadLine());
+
+        
+
+            if (colunaY + 1 > 9 && colunaY != 9)
+            {
+                colunaY -= tamanhoBarco;
+            }
+            for (int coluna = 0; coluna < tamanhoBarco; coluna++)
+            {
+
+                matriz[linhaX, colunaY] += 1;
+
+                linhaX += 1;
+
+                if (linhaX > 9)
+                {
+                    linhaX -= tamanhoBarco;
+                }
+
+            }
+        }
+        else
+        { 
+
+            Console.WriteLine("Informe a linha onde ira iniciar o barco");
+            int linhaX = int.Parse(Console.ReadLine());
+            Console.WriteLine("Informe a coluna onde ira iniciar o barco");
+            int colunaY = int.Parse(Console.ReadLine());
+           
+
+            if (colunaY + 1 > 9 && colunaY != 9)
+            {
+                colunaY -= tamanhoBarco;
+            }
+            for (int coluna = 0; coluna < tamanhoBarco; coluna++)
+            {
+
+                matriz[linhaX, colunaY] += 1;
+
+                colunaY += 1;
+
+                if (colunaY > 9)
+                {
+                    colunaY -= tamanhoBarco;
+                }
+            }
+
+        }
+        tamanhoBarco--;
+    }
+
+
+}
+
+
+popularMatriz(mapa);
+popularMatriz(meuMapa);
+
+GerarNavios(mapa);
+
+//escolherAtaque(mapa);
+
+escolherNavios(meuMapa);
+imprimirMeuMapa(meuMapa);
 
 
