@@ -93,7 +93,9 @@ GerarNavios(mapa);
 
 Console.WriteLine();
 
-imprimirMapa(mapa);
+escolherAtaque(mapa);
+
+
 
 //int soma = 0;
 
@@ -106,23 +108,72 @@ imprimirMapa(mapa);
 //}
 
 void imprimirMapa(int[,] matriz)
+{ 
+    for(int linha = 0; linha < tamanho; linha++)
+    {
+        for(int coluna = 0; coluna < tamanho; coluna++)
+        {
+            if (matriz[linha,coluna] == -1)
+            {
+                Console.Write("[ * ]");
+            } else if (matriz[linha, coluna] == -2)
+            {
+                Console.Write("[   ]");
+            }
+            else
+            {
+                Console.Write($"[{linha},{coluna}]");
+            }
+        }
+            Console.WriteLine();
+    }
+}
+
+void mostrarMapa()
 {
-    int contador = 0;
+
+    int contador = 1;
     for (int i = 0; i < tamanho; i++)
     {
         for (int j = 0; j < tamanho; j++)
         {
-            if (mapa[i, j] == 0)
-            {
-                Console.Write($"[ ]");
-
-            }
-            else
-            {
-                Console.Write($"[{mapa[i, j]}]");
-            }
+            Console.Write($"[{i}, {j}]\t");
+            contador++;
+           
         }
         Console.WriteLine();
     }
 }
+
+void escolherAtaque(int[,] matriz)
+{
+    int soma = 0;
+    while (soma < 16)
+    {
+        int linhaAtaque;
+        int colunaAtaque;
+        imprimirMapa(mapa);
+        Console.Write("escolha a linha do ataque: ");
+        linhaAtaque = int.Parse(Console.ReadLine());
+        Console.Write("escolha a coluna do ataque: ");
+        colunaAtaque = int.Parse(Console.ReadLine());
+
+        soma += matriz[linhaAtaque, colunaAtaque];
+
+        if (matriz[linhaAtaque, colunaAtaque] > 0)
+        {
+            matriz[linhaAtaque, colunaAtaque] = -1;
+        } else
+        {
+            matriz[linhaAtaque, colunaAtaque] = -2;
+        }
+
+        
+    }
+
+    Console.WriteLine("Você ganhou!!");
+
+}
+
+
 
