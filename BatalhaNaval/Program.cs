@@ -20,7 +20,7 @@ void popularMatriz(int[,] matriz)
 
 }
  
- void GerarNavios(int[,] matriz)
+ void gerarNavios(int[,] matriz)
 {
 
     int tamanhoBarco = 5;
@@ -132,9 +132,8 @@ void imprimirMeuMapa(int[,] matriz)
 
 void escolherAtaque(int[,] matriz)
 {
-    int soma = 0;
-    while (soma < 15)
-    {
+
+
         int linhaAtaque;
         int colunaAtaque;
         imprimirMapa(mapa);
@@ -142,8 +141,6 @@ void escolherAtaque(int[,] matriz)
         linhaAtaque = int.Parse(Console.ReadLine());
         Console.Write("escolha a coluna do ataque: ");
         colunaAtaque = int.Parse(Console.ReadLine());
-
-        soma += matriz[linhaAtaque, colunaAtaque];
 
         if (matriz[linhaAtaque, colunaAtaque] > 0)
         {
@@ -153,10 +150,6 @@ void escolherAtaque(int[,] matriz)
             matriz[linhaAtaque, colunaAtaque] = -2;
         }
 
-        
-    }
-
-    Console.WriteLine("Você ganhou!!");
 
 }
 
@@ -235,14 +228,108 @@ void escolherNavios(int[,] matriz)
 }
 
 
-popularMatriz(mapa);
-popularMatriz(meuMapa);
+void escolhaDaMaquina(int[,] matriz)
+{
+    
+        int linhaAtaque;
+        int colunaAtaque;
+        Console.WriteLine();
+        linhaAtaque = Random.Shared.Next(0, 10);
+        
+        colunaAtaque = Random.Shared.Next(0, 10);
+        
 
-GerarNavios(mapa);
+
+        if (matriz[linhaAtaque, colunaAtaque] > 0)
+        {
+           
+            matriz[linhaAtaque, colunaAtaque] = -1;
+        }
+        else if (matriz[linhaAtaque, colunaAtaque] != -1)
+        {
+            matriz[linhaAtaque, colunaAtaque] = -2;
+        }
+
+
+}
+
+int soma(int[,] matriz)
+
+{
+    int soma = 0;
+    for(int linha = 0; linha < tamanho; linha++)
+    {
+        for(int coluna = 0; coluna < tamanho; coluna++)
+        {
+            if (matriz[linha, coluna] < 0)
+            {
+                soma += 0;
+            }
+            else
+            {
+                soma += matriz[linha, coluna];
+
+            }
+        }
+    }
+
+    return soma;
+}
+
+
+
+void jogo(int[,] mapaMaquina, int[,] meuMapa)
+{
+
+    
+    popularMatriz(mapaMaquina);
+    gerarNavios(mapaMaquina);
+
+    popularMatriz(meuMapa);
+    escolherNavios(meuMapa);
+
+
+
+
+    while(soma(meuMapa) != 0 || soma(mapaMaquina) != 0)
+    {
+        
+        escolhaDaMaquina(meuMapa);
+        Console.WriteLine("Escolha da maquina");
+        imprimirMapa(meuMapa);
+        Console.WriteLine();
+        Console.WriteLine("Escolher ataque");
+        escolherAtaque(mapaMaquina);
+        Console.WriteLine(soma(mapaMaquina));
+
+        soma(meuMapa);
+        soma(mapaMaquina);
+
+    }
+
+    if(soma(meuMapa) == 0)
+    {
+        Console.WriteLine("Você perdeu!!");
+    }
+    else if(soma(mapaMaquina) == 0)
+    {
+        Console.WriteLine("Você ganhou!!");
+    }
+
+}
+
+//popularMatriz(mapa);
+//popularMatriz(meuMapa);
+
+//gerarNavios(mapa);
 
 //escolherAtaque(mapa);
 
-escolherNavios(meuMapa);
-imprimirMeuMapa(meuMapa);
+//escolherNavios(meuMapa);
+//imprimirMeuMapa(meuMapa);
+
+//escolhaDaMaquina(mapa);
+
+jogo(mapa, meuMapa);
 
 
