@@ -136,7 +136,7 @@ void escolherAtaque(int[,] matriz)
 
         int linhaAtaque;
         int colunaAtaque;
-        imprimirMapa(mapa);
+        imprimirMapa(matriz);
         Console.Write("escolha a linha do ataque: ");
         linhaAtaque = int.Parse(Console.ReadLine());
         Console.Write("escolha a coluna do ataque: ");
@@ -291,7 +291,7 @@ void jogo(int[,] mapaMaquina, int[,] meuMapa)
 
 
 
-    while(soma(meuMapa) != 0 || soma(mapaMaquina) != 0)
+    while(soma(meuMapa) != 0 && soma(mapaMaquina) != 0)
     {
         
         escolhaDaMaquina(meuMapa);
