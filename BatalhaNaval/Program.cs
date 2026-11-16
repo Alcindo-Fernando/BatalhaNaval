@@ -181,9 +181,9 @@ void escolherNavios(int[,] matriz)
         int posicao = int.Parse(Console.ReadLine());
         if (posicao == vertical)
         {
-            Console.WriteLine("Informe a linha onde ira iniciar o barco");
+            Console.WriteLine($"Informe a linha onde ira iniciar o barco de tamanho { tamanhoBarco}");
             int linhaX = int.Parse(Console.ReadLine());
-            Console.WriteLine("Informe a coluna onde ira iniciar o barco");
+            Console.WriteLine($"Informe a coluna onde ira iniciar o barco de tamanho {tamanhoBarco}");
             int colunaY = int.Parse(Console.ReadLine());
 
         
