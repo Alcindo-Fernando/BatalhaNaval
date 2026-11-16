@@ -139,13 +139,20 @@ void escolherAtaque(int[,] matriz)
 
         int linhaAtaque;
         int colunaAtaque;
-        
+        bool valido;
+        do{
             imprimirMapa(matriz);
+            valido = false;
             Console.Write("escolha a linha do ataque: ");
             linhaAtaque = int.Parse(Console.ReadLine());
             Console.Write("escolha a coluna do ataque: ");
             colunaAtaque = int.Parse(Console.ReadLine());
-
+            if(linhaAtaque > 9 || linhaAtaque < 0 || colunaAtaque > 9 || colunaAtaque < 0)
+            {
+                valido = true;
+            Console.WriteLine("Posição inválida, tente novamente!");
+            }
+        }while(valido);
         
 
         if (matriz[linhaAtaque, colunaAtaque] > 0)
@@ -330,5 +337,3 @@ void jogo(int[,] mapaMaquina, int[,] meuMapa)
  
 
 jogo(mapa, meuMapa);
-
-
